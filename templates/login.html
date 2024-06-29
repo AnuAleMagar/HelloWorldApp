@@ -11,10 +11,16 @@
             <li ><a href="{{url_for('index')}}">Home</a></li>
             <li ><a href="{{url_for('about')}}">About</a></li>
             <li ><a href="{{url_for('contact')}}">Contact</a></li>
-            <li ><a href="{{url_for('login')}}">Login</a></li>
         </ul>
     </nav>
-    <h1>This is from contact page</h1>
-    <p><bold>For more info ,contact me at someone@gmail.com</bold></p>
+    <center>Login Form</center> <br><br>
+    <center>
+<form action="{{ url_for('login') }}" method="GET">
+      <label for="username">Enter your username:</label>
+      <input type="text" id="username" name="username" value="" Placeholder="Enter your name here"> <br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    </center>
 </body>
 </html>
