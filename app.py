@@ -1,26 +1,26 @@
-from flask import Flask,render_template,request,url_for,redirect
+from flask import Flask,render_template,request,make_response,url_for,redirect
 from markupsafe import escape
 app=Flask(__name__)
-count=0
-def increment_count():
-     global count
-     count+=1
+
 
 @app.route('/')
 def index():
-    increment_count()
-    return  render_template("index.html")
+    visit_count=request.cookies.get('visit_count','0')
+    visit_count = int(visit_count) + 1
+    response = make_response(render_template("index.html"))
+    response.set_cookie('visit_count', str(visit_count))
+    return response
 @app.route('/about')
 def about():
-    increment_count()
+
     return render_template("about.html")
 @app.route('/contact')
 def contact():
-    increment_count()
+
     return render_template("contact.html")
 @app.route('/login')
 def login():
-    increment_count()
+
     username=request.args.get('username')
     if username:
          return redirect(url_for('loginsuccess',username=username))
@@ -31,7 +31,8 @@ def loginsuccess(username):
     return f'Hello {escape(username)}, Welcome to my app'
 @app.route('/pagevisitcount')
 def page():
-    return f'Hello, Youhave visited this websites {escape(count)} times.'
+    visit_count=request.cookies.get('visit_count','0')
+    return f'Hello, Youhave visited this websites {escape(visit_count)} times.'
 
 if __name__ == '__main__':
          app.run(debug=False)
